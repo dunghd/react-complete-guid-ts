@@ -8,6 +8,7 @@ export interface IAppProps {
 interface IAppState {
   persons: Array<IPersonProps>;
   otherState: string
+  showPersons: boolean
 }
 
 class App extends Component<IAppProps, IAppState> {
@@ -17,7 +18,8 @@ class App extends Component<IAppProps, IAppState> {
       { name: 'Manu', age: 29 },
       { name: 'Stephanie', age: 26 }
     ] as IPersonProps[],
-    otherState: 'some other value'
+    otherState: 'some other value',
+    showPersons: false
   } as IAppState;
 
   switchNameHandler = (newName: string) => {
@@ -40,6 +42,12 @@ class App extends Component<IAppProps, IAppState> {
     });
   };
 
+  togglePersonHandler = () => {
+    const doseShow = this.state.showPersons;
+
+    this.setState({ showPersons: !doseShow });
+  };
+
   render() {
     const style = {
       backgroundColor: 'white',
@@ -49,25 +57,28 @@ class App extends Component<IAppProps, IAppState> {
       cursor: 'pointer'
     };
 
+    let persons = null;
+
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          {this.state.persons.map(person => {
+            return <Person
+              name={person.name}
+              age={person.age} />
+          })}
+        </div>
+      );
+    }
+
     return (
       <div className="App">
         <h1>Hi, I'm React App</h1>
         <button
           style={style}
-          onClick={() => this.switchNameHandler(`DDH!!!`)}
-        > Switch Name</button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age} />
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age}
-          click={this.switchNameHandler.bind(this, 'DDH TEST 123')}
-          changed={this.nameChangedHandler}
-        >TEST TEST TEST</Person>
-        <Person
-          name={this.state.persons[2].name}
-          age={this.state.persons[2].age} />
+          onClick={this.togglePersonHandler}
+        >Toggle Persons</button>
+        {persons}
       </div>
     );
   }
