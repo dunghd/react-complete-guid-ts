@@ -2,6 +2,7 @@ import React from 'react';
 import './Person.css';
 
 export interface IPersonProps {
+  id: string,
   name: string,
   age: number,
   click?: (event: any) => void,
