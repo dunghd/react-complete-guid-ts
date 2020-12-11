@@ -1,5 +1,6 @@
 import React from 'react';
 import './Person.css';
+import Radium from 'radium';
 
 export interface IPersonProps {
   id: string,
@@ -11,8 +12,15 @@ export interface IPersonProps {
 };
 
 const person: React.FC<IPersonProps> = (props: IPersonProps) => {
+  const style: Radium.StyleRules = {
+    '@media (min-width: 600px)': {
+      width: '450px',
+      backgroundColor: 'red'
+    }
+  };
+
   return (
-    <div className="Person">
+    <div className="Person" style={style}>
       <p onClick={props.click}>I'm {props.name} and I am {props.age} years old!</p>
       <p>{props.children}</p>
       <input type="text" onChange={props.changed} value={props.name}></input>
@@ -20,4 +28,4 @@ const person: React.FC<IPersonProps> = (props: IPersonProps) => {
   );
 }
 
-export default person;
+export default Radium(person);
