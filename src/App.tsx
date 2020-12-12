@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+
 import './App.css';
-import Radium from 'radium';
 import Person, { IPersonProps } from './Person/Person';
 
 export interface IAppProps {
@@ -11,6 +12,26 @@ interface IAppState {
   otherState: string
   showPersons: boolean
 }
+
+// const Button = ({ children: ReactNode, onClick: () => void }) => (
+//   <button onClick={onClick}>{children}</button>
+// );
+
+const StyledButton = styled.button<{ alt: boolean }>`
+  background-color: ${props => props.alt ? 'red' : 'green'};
+  color: white;
+  font: inherit;
+  border: 1px solid blue;
+  padding: 8px;
+  cursor: pointer;
+  &:hover {
+    background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
+    color: black
+  }`;
+
+// const StyleButtonWrapper = ({alt}) => {
+//   return <StyledButton></StyledButton>;
+// };
 
 class App extends Component<IAppProps, IAppState> {
   state = {
@@ -98,19 +119,18 @@ class App extends Component<IAppProps, IAppState> {
     }
 
     return (
-      <Radium.StyleRoot>
-        <div className="App">
-          <h1>Hi, I'm React App</h1>
-          <p className={classes.join(' ')}>This is really working!</p>
-          <button
-            style={style}
-            onClick={this.togglePersonHandler}
-          >Toggle Persons</button>
-          {persons}
-        </div>
-      </Radium.StyleRoot>
+      <div className="App">
+        <h1>Hi, I'm React App</h1>
+        <p className={classes.join(' ')}>This is really working!</p>
+        <StyledButton
+          alt={this.state.showPersons}
+          onClick={this.togglePersonHandler}
+        >Toggle Persons
+        </StyledButton>
+        {persons}
+      </div>
     );
   }
 }
 
-export default Radium(App);
+export default App;
