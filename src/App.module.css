@@ -21,7 +21,7 @@
 
 .App button:hover {
   background-color: lightgreen;
-  color: black
+  color: black;
 }
 
 .App button.Red {

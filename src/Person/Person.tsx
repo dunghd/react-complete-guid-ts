@@ -11,6 +11,12 @@ export interface IPersonProps {
 };
 
 const person: React.FC<IPersonProps> = (props: IPersonProps) => {
+  const rnd = Math.random();
+
+  if (rnd > 0.7) {
+    throw new Error('Something went wrong');
+  }
+
   return (
     <div className={classes.Person}>
       <p onClick={props.click}>
