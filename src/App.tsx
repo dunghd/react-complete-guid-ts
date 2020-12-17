@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import classes from './App.module.css';
 import Person, { IPersonProps } from './Person/Person';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 export interface IAppProps {
 }
@@ -59,14 +58,13 @@ class App extends Component<IAppProps, IAppState> {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
-            return <ErrorBoundary key={person.id}>
-              <Person
-                id={person.id}
-                name={person.name}
-                age={person.age}
-                click={() => this.deletePersonHandler(index)}
-                changed={(event) => { this.nameChangedHandler(event, person.id) }} />
-            </ErrorBoundary>
+            return <Person
+              id={person.id}
+              key={person.id}
+              name={person.name}
+              age={person.age}
+              click={() => this.deletePersonHandler(index)}
+              changed={(event) => { this.nameChangedHandler(event, person.id) }} />
           })}
         </div>
       );
