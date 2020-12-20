@@ -6,7 +6,8 @@ import { IPersonProps } from '../components/Persons/Person/Person';
 import Cockpit from '../components/Cockpit/Cockpit';
 
 export interface IAppProps {
-}
+  appTitle: string
+};
 
 interface IAppState {
   persons: Array<IPersonProps>;
@@ -66,6 +67,7 @@ class App extends Component<IAppProps, IAppState> {
     return (
       <div className={classes.App}>
         <Cockpit
+          title={this.props.appTitle}
           showPersons={this.state.showPersons}
           persons={this.state.persons}
           clicked={this.togglePersonHandler}

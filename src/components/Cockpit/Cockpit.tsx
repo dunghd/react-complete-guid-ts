@@ -4,6 +4,7 @@ import { IPersonProps } from '../Persons/Person/Person';
 import classes from './Cockpit.module.css';
 
 export interface ICockpitProps {
+  title: string,
   persons: IPersonProps[],
   showPersons: boolean,
   clicked: (event: any) => void
@@ -28,7 +29,7 @@ const cockpit = (props: ICockpitProps) => {
 
   return (
     <div className={classes.Cockpit}>
-      <h1>Hi, I'm React App</h1>
+      <h1>{props.title}</h1>
       <p className={assignedClasses.join(' ')}>This is really working!</p>
       <button
         className={btnClass}
