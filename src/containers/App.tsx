@@ -16,6 +16,11 @@ interface IAppState {
 }
 
 class App extends Component<IAppProps, IAppState> {
+  constructor(props: IAppProps) {
+    super(props);
+    console.log('[App.tsx] constructor');
+  }
+
   state = {
     persons: [
       { id: "1", name: 'Max', age: 28 },
@@ -25,6 +30,20 @@ class App extends Component<IAppProps, IAppState> {
     otherState: 'some other value',
     showPersons: false
   } as IAppState;
+
+  static getDerivedStateFromProps(props: IAppProps, state: IAppState) {
+    console.log('[App.tsx] getDerivedStateFromProps', props);
+
+    return state;
+  }
+
+  componentWillMount() {
+    console.log('[App.tsx] componentWillMount');
+  }
+
+  componentDidMount() {
+    console.log('[App.tsx] componentDidMount');
+  }
 
   nameChangedHandler = (event: any, id: string | undefined) => {
     const personIndex = this.state.persons.findIndex(p => {
@@ -54,6 +73,8 @@ class App extends Component<IAppProps, IAppState> {
   };
 
   render() {
+    console.log('[App.tsx] render');
+
     let persons = null;
 
     if (this.state.showPersons) {

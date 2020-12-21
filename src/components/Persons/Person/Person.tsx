@@ -11,6 +11,8 @@ export interface IPersonProps {
 };
 
 const person: React.FC<IPersonProps> = (props: IPersonProps) => {
+  console.log('[Person.tsx] rendering...');
+
   return (
     <div className={classes.Person}>
       <p onClick={props.click}>

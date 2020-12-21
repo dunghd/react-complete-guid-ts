@@ -9,6 +9,8 @@ export interface IPersonsProps {
 };
 
 const persons = (props: IPersonsProps) => {
+  console.log('[Persons.tsx] rendering...');
+
   return <>{props.persons.map((person, index) => {
     return <Person
       id={person.id}
