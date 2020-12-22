@@ -4,7 +4,8 @@ import classes from './App.module.css';
 import Persons from '../components/Persons/Persons';
 import { IPersonProps } from '../components/Persons/Person/Person';
 import Cockpit from '../components/Cockpit/Cockpit';
-import WithClass from '../hoc/WithClass';
+import Auxiliary from '../hoc/Auxiliary';
+import withClass from '../hoc/withClass';
 
 export interface IAppProps {
   appTitle: string
@@ -97,7 +98,7 @@ class App extends Component<IAppProps, IAppState> {
     }
 
     return (
-      <WithClass classes={classes.App}>
+      <Auxiliary>
         <button
           onClick={() => {
             this.setState({ showCockpit: false })
@@ -113,9 +114,9 @@ class App extends Component<IAppProps, IAppState> {
           />
         ) : null}
         {persons}
-      </WithClass>
+      </Auxiliary>
     );
   }
 }
 
-export default App;
+export default withClass<IAppProps, IAppState>(App, classes.App);
