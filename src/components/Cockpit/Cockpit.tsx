@@ -1,16 +1,36 @@
-import React from 'react';
-import { IPersonProps } from '../Persons/Person/Person';
+import React, { useEffect } from 'react';
 
 import classes from './Cockpit.module.css';
 
 export interface ICockpitProps {
   title: string,
-  persons: IPersonProps[],
+  // persons: IPersonProps[],
+  personsLength: number,
   showPersons: boolean,
   clicked: (event: any) => void
 };
 
-const cockpit = (props: ICockpitProps) => {
+const Cockpit = (props: ICockpitProps) => {
+  useEffect(() => {
+    console.log('[Cockpit.tsx useEffect]');
+
+    const timer = setTimeout(() => {
+      alert('Saved data to cloud!');
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+      console.log('[Cockpit.tsx cleanup work in useEffect]');
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log('[Cockpit.tsx 2nd useEffect]');
+
+    return () => {
+      console.log('[Cockpit.tsx cleanup work in 2nd useEffect]');
+    };
+  });
 
   const assignedClasses = [];
   let btnClass = '';
@@ -19,11 +39,11 @@ const cockpit = (props: ICockpitProps) => {
     btnClass = classes.Red;
   }
 
-  if (props.persons.length <= 2) {
+  if (props.personsLength <= 2) {
     assignedClasses.push(classes.red);
   }
 
-  if (props.persons.length <= 1) {
+  if (props.personsLength <= 1) {
     assignedClasses.push(classes.bold);
   }
 
@@ -40,4 +60,4 @@ const cockpit = (props: ICockpitProps) => {
   );
 };
 
-export default cockpit;
+export default React.memo(Cockpit);

@@ -1,5 +1,5 @@
-import React from 'react';
-import classes from './Person.module.css';
+import React, { Component } from 'react';
+import Aux from '../../../hoc/Auxiliary';
 
 export interface IPersonProps {
   id: string,
@@ -10,18 +10,26 @@ export interface IPersonProps {
   children?: React.ReactNode
 };
 
-const person: React.FC<IPersonProps> = (props: IPersonProps) => {
-  console.log('[Person.tsx] rendering...');
+interface IPersonState { };
 
-  return (
-    <div className={classes.Person}>
-      <p onClick={props.click}>
-        I'm {props.name} and I am {props.age} years old!
-      </p>
-      <p> {props.children}</p>
-      <input type="text" onChange={props.changed} value={props.name}></input>
-    </div >
-  );
+class Person extends Component<IPersonProps, IPersonState> {
+  render() {
+    console.log('[Person.tsx] rendering...');
+
+    return (
+      <Aux>
+        <p onClick={this.props.click}>
+          I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+        <p> {this.props.children}</p>
+        <input
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}>
+        </input>
+      </Aux>
+    );
+  };
 }
 
-export default person;
+export default Person;

@@ -4,6 +4,7 @@ import classes from './App.module.css';
 import Persons from '../components/Persons/Persons';
 import { IPersonProps } from '../components/Persons/Person/Person';
 import Cockpit from '../components/Cockpit/Cockpit';
+import WithClass from '../hoc/WithClass';
 
 export interface IAppProps {
   appTitle: string
@@ -12,7 +13,8 @@ export interface IAppProps {
 interface IAppState {
   persons: Array<IPersonProps>;
   otherState: string
-  showPersons: boolean
+  showPersons: boolean,
+  showCockpit: boolean
 }
 
 class App extends Component<IAppProps, IAppState> {
@@ -28,7 +30,8 @@ class App extends Component<IAppProps, IAppState> {
       { id: "3", name: 'Stephanie', age: 26 }
     ] as IPersonProps[],
     otherState: 'some other value',
-    showPersons: false
+    showPersons: false,
+    showCockpit: true
   } as IAppState;
 
   static getDerivedStateFromProps(props: IAppProps, state: IAppState) {
@@ -37,12 +40,21 @@ class App extends Component<IAppProps, IAppState> {
     return state;
   }
 
-  componentWillMount() {
-    console.log('[App.tsx] componentWillMount');
-  }
+  // componentWillMount() {
+  //   console.log('[App.tsx] componentWillMount');
+  // }
 
   componentDidMount() {
     console.log('[App.tsx] componentDidMount');
+  }
+
+  shouldComponentUpdate(nextProps: IAppProps, nextState: IAppState) {
+    console.log('[App.tsx] shouldComponentUpdate');
+    return true;
+  }
+
+  componentDidUpdate() {
+    console.log('[App.tsx] componentDidUpdate');
   }
 
   nameChangedHandler = (event: any, id: string | undefined) => {
@@ -55,7 +67,6 @@ class App extends Component<IAppProps, IAppState> {
 
     const persons = [...this.state.persons];
     persons[personIndex] = person;
-
 
     this.setState({ persons: persons });
   };
@@ -86,15 +97,23 @@ class App extends Component<IAppProps, IAppState> {
     }
 
     return (
-      <div className={classes.App}>
-        <Cockpit
-          title={this.props.appTitle}
-          showPersons={this.state.showPersons}
-          persons={this.state.persons}
-          clicked={this.togglePersonHandler}
-        />
+      <WithClass classes={classes.App}>
+        <button
+          onClick={() => {
+            this.setState({ showCockpit: false })
+          }}
+        >Remove Cockpit
+        </button>
+        {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonHandler}
+          />
+        ) : null}
         {persons}
-      </div>
+      </WithClass>
     );
   }
 }
