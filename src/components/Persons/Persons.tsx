@@ -5,7 +5,8 @@ export interface IPersonsProps {
   persons: IPersonProps[],
   clicked: (index: number) => void,
   changed: (event: any, personId: string) => void,
-  children?: React.ReactNode
+  children?: React.ReactNode,
+  isAuthenticated: boolean
 };
 
 interface IPersonsState { };
@@ -56,7 +57,8 @@ class Persons extends PureComponent<IPersonsProps, IPersonsState> {
         name={person.name}
         age={person.age}
         click={() => this.props.clicked(index)}
-        changed={(event) => this.props.changed(event, person.id)} />
+        changed={(event) => this.props.changed(event, person.id)}
+        isAuth={this.props.isAuthenticated} />
     })} </>
   };
 };
