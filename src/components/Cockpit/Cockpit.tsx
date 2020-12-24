@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 
 import classes from './Cockpit.module.css';
+import AuthContext from '../../context/auth-context';
 
 export interface ICockpitProps {
   title: string,
@@ -8,19 +9,13 @@ export interface ICockpitProps {
   personsLength: number,
   showPersons: boolean,
   clicked: (event: any) => void,
-  login: (event: any) => void
 };
 
 const Cockpit = (props: ICockpitProps) => {
   const toggleBtnRef = useRef<HTMLButtonElement>(null!);
-  // const onButtonClick = () => {
-  //   // strict null checks need us to check if inputEl and current exist.
-  //   // but once current exists, it is of type HTMLInputElement, thus it
-  //   // has the method focus! ✅
-  //   if (toggleBtnRef && toggleBtnRef.current) {
-  //     toggleBtnRef.current.click();
-  //   }
-  // };
+  const authContext = useContext(AuthContext);
+
+  console.log(authContext.authenticated);
 
   useEffect(() => {
     console.log('[Cockpit.tsx useEffect]');
@@ -69,7 +64,7 @@ const Cockpit = (props: ICockpitProps) => {
         onClick={props.clicked}>
         Toggle Persons
       </button>
-      <button onClick={props.login}>Log in</button>
+      <button onClick={authContext.login}>Log in</button>
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './Person.module.css';
 import Aux from '../../../hoc/Auxiliary';
 import withClass from '../../../hoc/withClass';
+import AuthContext from '../../../context/auth-context';
 
 export interface IPersonProps {
   id: string,
@@ -21,12 +22,15 @@ class Person extends Component<IPersonProps, IPersonState> {
     this.inputElement = React.createRef();
   }
 
+  static contextType = AuthContext;
+
   // inputElement: HTMLInputElement | null = null;
   inputElement: React.RefObject<HTMLInputElement>;
 
   componentDidMount() {
     // this.inputElement?.focus();
     this.inputElement.current?.focus();
+    console.log(this.context.authenticated);
   }
 
   render() {
@@ -34,7 +38,7 @@ class Person extends Component<IPersonProps, IPersonState> {
 
     return (
       <Aux>
-        {this.props.isAuth ? <p>Authenticated!</p> : <p>Please log in</p>}
+        { this.context.authenticated ? <p>Authenticated!</p> : <p>Please log in</p>}
         <p onClick={this.props.click}>
           I'm {this.props.name} and I am {this.props.age} years old!
         </p>
